@@ -1,0 +1,66 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+    int data;
+    struct node* next;
+};
+struct node* addtoempty(int data){
+    struct node* temp=malloc(sizeof(struct node));
+    temp->data=data;
+    temp->next=temp;
+    return temp;
+}
+struct node *addatbeg(struct node* tail,int data){
+    struct node* newp=malloc(sizeof(struct node));
+    newp->data=data;
+    newp->next=tail->next;
+    tail->next=newp;
+    return tail;
+    }
+    struct node* addatend(struct node* tail,int data){
+        struct node* newp=malloc(sizeof(struct node));
+        newp->data=data;
+        newp->next=NULL;
+        
+        newp->next=tail->next;
+        tail->next=newp;
+        tail=tail->next;
+        return tail;
+    }
+    struct node* addafterpos(struct node* tail,int data,int pos){
+        struct node* p=tail->next;
+        struct node* newp=malloc(sizeof(struct node));
+        newp->data=data;
+        newp->next=NULL;
+        while(pos>1){
+            p=p->next;
+            pos--;
+        }
+        newp->next=p->next;
+        p->next=newp;
+        if(p==tail){
+            tail=tail->next;
+        }
+        return tail;
+    }
+    void print(struct node* tail){
+        struct node* p=tail->next;
+        do
+        {
+            printf("%d\t",p->data);
+            p=p->next;
+        }while(p!=tail->next);
+        printf("\n");
+    }
+    int main(){
+        struct node* tail;
+        tail=addtoempty(45);
+        tail=addatbeg(tail,34);
+        tail=addatend(tail,6);
+        tail=addatend(tail,56);
+        print(tail);
+        tail=addafterpos(tail,66,2);
+        //tail=addafterpos(tail,6,3);
+        print(tail);
+        return 0;
+    }
